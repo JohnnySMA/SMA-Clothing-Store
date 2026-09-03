@@ -1,16 +1,15 @@
 <section class="hero-art">
+  {% if section.settings.image != blank %}
+    <div class="hero-art__visual">{{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', widths: '1200,1800,2200,2400', alt: section.settings.heading | escape }}</div>
+  {% else %}
+    <div class="hero-art__visual hero-art__visual--placeholder" aria-hidden="true"></div>
+  {% endif %}
   <div class="hero-art__copy">
     <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     <h1>{{ section.settings.heading }}</h1>
-    <p class="hero-art__lede">{{ section.settings.text }}</p>
-    <a class="button button--light" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+    <a class="button button--light" href="{{ section.settings.button_link }}">{{ section.settings.button_label }} <span aria-hidden="true">↗</span></a>
   </div>
-  {% if section.settings.image != blank %}
-    <div class="hero-art__visual">{{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '800,1200,1600,1800' }}</div>
-  {% else %}
-    <div class="hero-art__visual hero-art__visual--placeholder"><span>Original art<br>for people who feel too much.</span></div>
-  {% endif %}
 </section>
 {% schema %}
-{"name":"Art hero","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"First transmission / 001"},{"type":"text","id":"heading","label":"Heading","default":"Wear something worth staring at."},{"type":"textarea","id":"text","label":"Text","default":"Original artwork translated into limited-run pieces for the beautifully out of place."},{"type":"text","id":"button_label","label":"Button label","default":"Explore the drop"},{"type":"url","id":"button_link","label":"Button link"},{"type":"image_picker","id":"image","label":"Hero image"}],"presets":[{"name":"Art hero"}]}
+{"name":"Art hero","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"CAN'T WORK APPAREL · DROP 001"},{"type":"text","id":"heading","label":"Heading","default":"LIVE EASY. STAY SALTY."},{"type":"text","id":"button_label","label":"Button label","default":"SHOP THE DROP"},{"type":"url","id":"button_link","label":"Button link"},{"type":"image_picker","id":"image","label":"Hero artwork"}],"presets":[{"name":"Art hero"}]}
 {% endschema %}

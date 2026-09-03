@@ -1,0 +1,5 @@
+<section class="section collection-page">
+  <div class="section-heading"><div><p class="eyebrow">Collection</p><h1>{{ collection.title }}</h1></div><p>{{ collection.description }}</p></div>
+  <div class="product-grid">{% for product in collection.products %}{% render 'product-card', product: product %}{% else %}<p>No pieces here yet.</p>{% endfor %}</div>
+</section>
+{% schema %}{"name":"Main collection","settings":[]}{% endschema %}

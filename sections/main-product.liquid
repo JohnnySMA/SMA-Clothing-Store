@@ -1,0 +1,35 @@
+<section class="product-page">
+  <div class="product-media">
+    <div class="product-media__main" data-product-main>
+      {% assign first_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+      {% if first_image %}{{ first_image | image_url: width: 1600 | image_tag: loading: 'eager', data-product-image: first_image.id }}{% endif %}
+    </div>
+    <div class="product-media__thumbs">
+      {% for image in product.images %}
+        <button type="button" data-thumb="{{ image.id }}">{{ image | image_url: width: 240 | image_tag: loading: 'lazy', alt: image.alt | escape }}</button>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="product-info">
+    <p class="eyebrow">Original artwork / {{ product.type }}</p>
+    <h1>{{ product.title }}</h1>
+    <p class="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+    <div class="product-description">{{ product.description }}</div>
+    {% form 'product', product, class: 'product-form', data-product-form: '' %}
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <fieldset class="option-group"><legend>{{ option.name }}</legend><div class="option-values">
+            {% for value in option.values %}<label><input type="radio" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><span>{{ value }}</span></label>{% endfor %}
+          </div></fieldset>
+        {% endfor %}
+      {% endunless %}
+      <label class="sr-only" for="ProductSelect">Variant</label>
+      <select id="ProductSelect" name="id" data-variant-select>
+        {% for variant in product.variants %}<option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} data-image-id="{{ variant.featured_image.id }}">{{ variant.title }} — {{ variant.price | money }}</option>{% endfor %}
+      </select>
+      <button class="button button--dark button--wide" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to bag{% else %}Sold out{% endif %}</button>
+    {% endform %}
+    <div class="trust-row"><span>Designed in small runs</span><span>Secure checkout</span><span>Easy returns</span></div>
+  </div>
+</section>
+{% schema %}{"name":"Main product","settings":[]}{% endschema %}
